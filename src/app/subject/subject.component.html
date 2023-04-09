@@ -1,0 +1,104 @@
+<div>
+    <h1>Subject</h1>
+    <div class="row">
+        <div class="col-lg-6">
+            <p> An RxJS Subject is a special type of Observable that allows values to be multicasted to many Observers. While plain Observables are unicast (each subscribed Observer owns an independent execution of the Observable), Subjects are multicast.</p>
+            <p>A Subject is like an Observable, but can multicast to many Observers. Subjects are like EventEmitters: they maintain a registry of many listeners.</p>
+            <p>Every Subject is an Observable. Given a Subject, you can subscribe to it, providing an Observer, which will start receiving values normally.</p>
+            <p>Every Subject is an Observer. It is an object with the methods next(v), error(e), and complete(). To feed a new value to the Subject, just call next(theValue), and it will be multicasted to the Observers registered to listen to the Subject.</p>
+        </div>
+
+        <div class="col-lg-6">
+            <pre>
+                // Observables are unicast
+
+    let obervable = new Observable(obs => &#123;
+      obs.next(Math.floor(Math.random() * 10))
+    })
+
+    // subscriber 1
+    obervable.subscribe(res => &#123;
+      console.log("Obervable subscriber 1 : " + res);
+    })
+    // subscriber 2
+
+    obervable.subscribe(res => &#123;
+      console.log("Obervable subscriber 2 : " + res);
+    })
+
+    // Subject are multicast
+    let subject = new Subject()
+
+      // subscriber 1
+    subject.subscribe(res=>&#123;
+      console.log("Subject subscriber 1 : " + res);      
+    })
+
+      // subscriber 2
+    subject.subscribe(res=>&#123;
+      console.log("Subject subscriber 2 : " + res);      
+    })
+    subject.next((Math.floor(Math.random() * 10)))
+            </pre>
+        </div>
+        <hr>
+
+        <div class="col-lg-6 mt-3">
+            <pre>
+// ajax using observable open network tab 2 times api calls 
+
+    let data = ajax('https://fakestoreapi.com/users')
+                             // return as observables
+    data.subscribe(res=>&#123;
+      console.log(res);     
+    })
+    data.subscribe(res=>&#123;
+      console.log(res);     
+    })
+
+
+// ajax using subject open network tab 1 times api calls 
+
+    let data2 = ajax('https://fakestoreapi.com/products')
+    let sub = new Subject();
+    sub.subscribe(res=>&#123;
+      console.log('ajax using subject', data2);   
+    })
+    sub.subscribe(res=>&#123;
+      console.log('ajax using subject', data2);   
+    })
+    data2.subscribe(sub)
+            </pre>
+        </div>
+
+        <div class="col-lg-6 mt-3">
+            <pre>
+// subject to show data when open particular component
+
+                this.service.exclusivesubject.next(true)
+            
+              ngOnDestroy(): void &#123;
+                this.service.exclusivesubject.next(false)
+                
+              }
+            </pre>
+        </div>
+        <!-- Component cumminication -->
+        <div class="col-lg-12">
+          <h2 class="text-center">Component cumminication</h2>
+          <div>
+            <h3>Username: <span class="text-primary">{{username}}</span></h3>
+          </div>
+          <div class="row">
+            <div class="col-lg-4">
+              <app-comp1></app-comp1>
+            </div>
+            <div class="col-lg-4">
+              <app-comp2></app-comp2>
+            </div>
+          </div>
+
+        </div>
+    </div>
+</div>
+<router-outlet></router-outlet>

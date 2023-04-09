@@ -1,0 +1,69 @@
+<div>
+    <h1>Operator</h1>
+    <div class="row">
+        <div class="col-lg-6">
+            <h3>Pipeable Operators</h3>
+            <p>A Pipeable Operator is a function that takes an Observable as its input and returns another Observable. It is a pure operation: the previous Observable stays unmodified.</p>
+            
+            <h4>toArray() - convert into array </h4>
+            <pre>
+                let source = interval(100)
+                source.pipe(
+                    take(5),
+                    toArray()
+                )
+                .subscribe(res=>&#123;
+                     console.log("toArray =>",res);  
+                })
+            </pre>
+
+            <h4>map</h4>
+            <pre>
+                of(1,2,3).
+                pipe(
+                    map(value=>&#123;
+                    return value*2
+                })).
+                subscribe(res=>&#123;
+                    console.log("map pipe =>",res);     
+                })
+            </pre>
+
+            <h4>filter</h4>
+            <p>use toArray() after filter </p>
+            <pre>
+                no =[1,2,3,4,5,6,7,8,9,10];
+                let source2 = from(this.no);
+                source2.pipe(
+                  filter(v=>&#123;
+                   return v%2==0;
+                  }),
+                  toArray()
+                )
+                .subscribe(res=>&#123;
+                  console.log("filter =>",res);
+                  
+                })
+            </pre>
+        </div>
+
+        <div class="col-lg-6">
+            <h3>Creation Operators</h3>
+            <p>Creation Operators are the other kind of operator, which can be called as standalone functions to create a new Observable. </p>
+            <p>For example: <code>of(1, 2, 3)</code> creates an observable that will emit 1, 2, and 3, one right after another.</p>
+            <h4>of </h4>
+            <pre>
+                of(1,2,3).
+                subscribe(res=>&#123;
+                    console.log(res);
+                  })
+            </pre>
+            <h4>from - convert into observable </h4>
+            <pre>
+no =[1,2,3,4,5,6,7,8,9,10];
+                let source2 = from(this.no);
+            </pre>
+            
+        </div>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+
+<div>
+    <h1>Replay Subject</h1>
+    <p>A ReplaySubject is similar to a BehaviorSubject in that it can send old values to new subscribers</p>
+    <pre>
+        // replay subject
+    let $replaySubject = new ReplaySubject(2);
+    $replaySubject.next('hello');
+    $replaySubject.next('How are you');
+    $replaySubject.next('stay at home');
+    $replaySubject.next('keep smiling');
+
+    $replaySubject.subscribe(res=>&#123;
+      console.log('sub 1: ',res);   
+    })
+    $replaySubject.next('keep learning')
+    $replaySubject.next('keep updated')
+
+    $replaySubject.subscribe(res=>&#123;
+      console.log('sub 2 : ',res);   
+    })
+    </pre>
+</div>
+
+<!-- Add video -->
+<div>
+    <div class="row">
+        <div class="col"><h3>{{methodInterval? 'Add video' : 'Interval started'}}</h3></div>
+        <div class="col text-end"><button class="btn btn-warning " (click)="toggle()">Start Interval </button></div>
+    </div>
+    <div class="row justify-content-center" *ngIf="methodInterval">
+        <div class="col-md-4">
+            <input type="text" class="form-control" #video>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-success" (click)="addvideo(video)">Add</button>
+        </div>
+    </div>
+    <hr>
+
+    <!-- user list -->
+
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <p><b>User 1</b></p>
+            <ul class="list-unstyled">
+                <li class="bg-light p-2 mb-2" *ngFor="let item of userlist1"><strong>video : </strong> {{item}}</li>
+            </ul>    
+        </div>
+
+         <div class="col-md-4">
+            <p><b>User 2</b></p>
+            <ul class="list-unstyled">
+                <li class="bg-light p-2 mb-2" *ngFor="let item of userlist2"><strong>video : </strong> {{item}}</li>
+            </ul>   
+            <div>
+                <button class="btn " 
+                (click)="user2Subscribe()"
+                [ngClass]="subscribeMode2? 'btn-danger' : 'btn-success'"
+                >{{subscribeMode2? 'Unsubscribe' : 'Subscribe'}}</button>
+            </div> 
+        </div>
+
+         <div class="col-md-4">
+            <p><b>User 3</b></p>
+            <ul class="list-unstyled">
+                <li class="bg-light p-2 mb-2" *ngFor="let item of userlist3"><strong>video : </strong> {{item}}</li>
+            </ul> 
+            <button class="btn "
+            [ngClass]="subscribeMode3? 'btn-danger' : 'btn-success'"
+            (click)="user3Subscribe()"
+            >{{subscribeMode3? 'Unsubscribe' : 'Subscribe'}}</button>   
+        </div>
+       
+    </div>
+</div>

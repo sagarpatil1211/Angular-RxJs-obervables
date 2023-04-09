@@ -1,0 +1,100 @@
+<div>
+    <h1>Observables, Observer, Subcription</h1>
+
+    <div class="row">
+        <h3>see console</h3>
+        <div class="col-lg-6">
+            <h3>Observables</h3>
+            <p>It represent how data will produce in future</p>
+            <p>Observables are lazy Push collections of multiple values.</p>
+            <p>It can not execute or start immediately on creation. it execute after subscribe it.</p>
+            <pre>
+                let observable = new Observable(sub=>&#123;
+                    sub.next(1);
+                    sub.next(2);
+                    sub.next(3);
+                    setTimeout(() => &#123;
+                      sub.next(4)
+                    }, 2000);
+                  })
+            </pre>
+        </div>
+        <div class="col-lg-6">
+            <h3>Observer</h3>
+            <p>An Observer is a consumer of values delivered by an Observable. Observers are simply a set of callbacks</p>
+            <p>Observers are just objects with three callbacks, one for each type of notification that an Observable may deliver.</p>
+            <pre>
+const observer = &#123;
+next: x => console.log('Observer got a next value: ' + x),
+error: err => console.error('Observer got an error: ' + err),
+complete: () => console.log('Observer got a complete notification'),
+                  };
+            </pre>
+
+            <h3>Subcription</h3>
+            <p>It is used to represent the <b>execution of an Observable</b>. It is primarily used to cancel the
+                execution. For example, when the observable is created, you have to <code>subscribe</code> to it to
+                execute the observable. It can also be used to cancel the execution by using <code>unsubscribe</code>
+            </p>
+            <p>A Subscription essentially just has an unsubscribe() function to  cancel Observable executions.</p>
+        </div>
+
+        <div class="col-lg-6">
+            <h4>Example</h4>
+            <pre>
+                console.log('Before observables');
+    
+                let observable = new Observable(sub=>&#123;
+                  sub.next(1);
+                  sub.next(2);
+                  sub.next(3);
+                  setTimeout(() => &#123;
+                    sub.next(4)
+                  }, 2000);
+                })
+                console.log('After observables');
+                console.log('before subcription');
+            
+                observable.subscribe(&#123;
+                  next(x)&#123;
+                    console.log('value', x);  
+                  },
+                  error(err)&#123;
+                    console.log(err);  
+                  },
+                  complete()&#123;
+                    console.log('done');
+                    
+                  }
+                })
+                console.log('After subcription');
+            </pre>
+        </div>
+        <div class="col-lg-6">
+            <p>Show date </p>
+            <h3>{{date | date:'dd-MM-yyyy hh:mm:ss'}}</h3>
+
+            <pre>
+                let obs = new Observable(producer=>&#123;
+                    setInterval(()=>&#123;
+              producer.next(new Date())
+                    },1000)
+                  })
+                  // subcribe data
+                  let subcription = obs.subscribe(result=>&#123;
+                      console.log(result);  
+                  })
+                  // unsubscribe data
+              
+                  setTimeout(() => &#123;
+                    subcription.unsubscribe();
+                  }, 5000);
+              
+                  //show date continousoly
+                  obs.subscribe(result=>&#123;
+                    this.date =result
+                  })
+            </pre>
+        </div>
+    </div>
+</div>

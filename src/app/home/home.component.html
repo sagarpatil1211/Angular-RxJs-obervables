@@ -1,0 +1,150 @@
+<div>
+    <h1>RxJS</h1>
+    <p>RxJS is an acronym that stands for <b>Reactive Extension for JavaScript </b>. It is a JavaScript library that is
+        used to work with Reactive programming that deals with asynchronous data calls, callbacks and event-based
+        programs. RxJS can be used with other JavaScript libraries such as Angular, ReactJS, Vue.js, Node.js etc. It is
+        supported by JavaScript and also with TypeScript.</p>
+    <p>RxJS is a library for composing asynchronous and event-based programs by using observable sequences. It provides
+        one core type, the Observable, satellite types (Observer, Schedulers, Subjects) and operators inspired by Array
+        methods (map, filter, reduce, every, etc) to allow handling asynchronous events as collections.</p>
+
+    <h3>Features of RxJS</h3>
+    <p>Following is the list of essential concepts or primary features of RxJS that are used to solve async event
+        management:</p>
+
+    <div class="row">
+
+        <div class="col-lg-6 border">
+            <li><h5>Observable</h5></li>
+            <p>The Observable is represent how data ie value or event will produce in future  </p>
+            <p>The observable is used to represent the idea of an invokable collection of future values or events. It
+                can be defined as a function that creates an observer and attaches it to the source where values are
+                expected. </p>
+            <p>The observable examples are <b>clicks, mouse events from a dom element or an Http request</b>, etc.
+                <br>Observables are lazy Push collections of multiple values</p>
+            <hr>
+            <!-- ------- -->
+
+            <li><h5>Observer</h5></li>
+            <p> An Observer is a consumer of values delivered by an Observable. Observers are simply a <b>set of
+                    callbacks</b>, one for each type of notification delivered by the Observable: <small>next, error,
+                    and complete</small>.</p>
+            <pre>const observer = &#123;
+next: x => console.log('Observer got a next value: ' + x),
+error: err => console.error('Observer got an error: ' + err),
+complete: () => console.log('Observer got a complete notification'),
+      };</pre>
+            <p class="text-danger">To use the Observer, provide it to the subscribe of an Observable:</p>
+            <pre>observable.subscribe(observer);</pre>
+            <p>When subscribing to an <b>Observable</b>, you may also just provide the next callback as an argument,
+                without being attached to an <b>Observer</b> object, for instance like this:</p>
+            <pre>   observable.subscribe(x => console.log(' next value: ' + x));</pre>
+            <p>Internally in <small>observable.subscribe</small>, it will create an <small>Observer</small> object using
+                the callback argument as the <small>next</small> handler.</p>
+            <hr>
+            <!-- ------- -->
+
+
+            <li><h5>Subscription</h5></li>
+            <p>It is used to represent the <b>execution of an Observable</b>. It is primarily used to cancel the
+                execution. For example, when the observable is created, you have to <code>subscribe</code> to it to
+                execute the observable. It can also be used to cancel the execution by using <code>unsubscribe</code>
+            </p>
+
+            <!-- ------- -->
+
+        </div>
+        <!-- ------------------------------------------------ -->
+
+        <div class="col-lg-6 border">
+
+
+            <li><h5>Operators</h5></li>
+            <p>Operators are <b>simple functions</b> used to enable a functional programming style to deal with
+                collections with operations like map, filter, concat, flatMap, etc. It takes observable as input and
+                gives the output also in the form of observable.</p>
+            <p>There are two kinds of operators:</p>
+            <p><b>Pipeable Operators</b> are the kind that can be piped to Observables using the syntax
+                <code>observableInstance.pipe(operator())</code>. These include,
+                <code>filter(...), and mergeMap(...)</code>. When called, they do not change the existing Observable
+                instance. Instead, they return a new Observable, whose subscription logic is based on the first
+                Observable.</p>
+            <p>A Pipeable Operator is a function that takes an Observable as its input and returns another Observable.
+                It is a pure operation: the previous Observable stays unmodified.</p>
+            <p>A Pipeable Operator is essentially a pure function which takes one Observable as input and generates
+                another Observable as output. Subscribing to the output Observable will also subscribe to the input
+                Observable.</p>
+            <p><b>Creation Operators</b> are the other kind of operator, which can be called as standalone functions to
+                create a new Observable. <br>
+                For example: <code>of(1, 2, 3)</code> creates an observable that will emit 1, 2, and 3, one right after
+                another.</p>
+            <p>For example, the operator called <code>map</code> is analogous to the Array method of the same name. Just
+                as [1, 2, 3].map(x => x * x) will yield [1, 4, 9], the Observable created like this:</p>
+            <pre>
+                of(1, 2, 3)
+  .pipe(map((x) => x * x))
+  .subscribe((v) => console.log(`value: $&#123;v}`));
+
+// Logs:
+// value: 1
+// value: 4
+// value: 9
+             </pre>
+
+
+        </div>
+        <!-- ------------------------------------------------------- -->
+
+        <div class="col-lg-6 border mt-3">
+            <li><h5>Subject</h5></li>
+            <p> An RxJS Subject is a special type of Observable that allows values to be multicasted to many Observers. While plain Observables are unicast (each subscribed Observer owns an independent execution of the Observable), Subjects are multicast.</p>
+            <p>A subject is equivalent to an EventEmitter and used to multicast a value or event to multiple Observers. <br>
+             For example: Consider a button with an event listener; the function attached to the event will be called whenever the user will click on the button.</p>
+             <p><b>Every Subject is an Observable</b>. Given a Subject, you can subscribe to it, providing an Observer, which will start receiving values normally.</p>
+             <p><b>Every Subject is an Observer</b>. It is an object with the methods next(v), error(e), and complete(). To feed a new value to the Subject, just call next(theValue), and it will be multicasted to the Observers registered to listen to the Subject.</p>
+        </div>
+
+         <!-- ------------------------------------------------------- -->
+
+         <div class="col-lg-6 border mt-3">
+            <li><h5>Schedulers</h5></li>
+            <p> A scheduler controls when a subscription starts and when notifications are delivered. It consists of three components.</p>
+         </div>
+
+          <!-- ------------------------------------------------------- -->
+
+          <div class="col-lg-12 border mt-3">
+            <h4>Difference betweeen Promise & Observable</h4>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Promise</th>
+                        <th>Obervables</th>
+                    </tr>
+                    
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Emit single value at a time</td>
+                        <td>Emit multiple value over a period of time</td>
+                    </tr>
+                    <tr>
+                        <td>Not lazy(Eager) <br>
+                        execute immediately after creation</td>
+                        <td> lazy ... <br>
+                           can't execute immediately after creation, execute when we subscribe it using subscribe() method</td>
+                    </tr>
+                    <tr>
+                        <td>are not cancellable</td>
+                        <td>can be cancel using unsubscribe() method</td>
+                    </tr>
+                    <tr>
+                        <td>dont't provide any operator</td>
+                        <td>provide RxJS operators like map, filter etc</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+          </div>
+    </div>
+</div>
